@@ -1,21 +1,38 @@
 {
   "extends": "nx/presets/npm.json",
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "lifetimed",
-  "affected": {
-    "defaultBase": "main"
-  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": [
           "build",
-          "lint",
           "test",
-          "e2e"
+          "lint"
         ]
       }
+    }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
+    "test": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      },
+      {
+        "target": "test",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "pluginsConfig": {
+    "@nrwl/js": {
+      "analyzeSourceFiles": true
     }
   }
 }
