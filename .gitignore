@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 build
+.turbo
 
 # dependencies
 node_modules

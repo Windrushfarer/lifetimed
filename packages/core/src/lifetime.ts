@@ -1,15 +1,6 @@
-export interface Lifetime {
-  readonly isTerminated: boolean
+import { LifetimeTerminable } from "./types"
 
-  onTerminate(fn: Function): void
-  removeFn(fn: Function): void
-}
-
-type TerminationOptions = {
-  callImmediately?: boolean
-}
-
-export class LifetimeTerminable implements Lifetime {
+export class LifetimeTerminableImpl implements LifetimeTerminable {
   private actions: Function[] = []
 
   isTerminated: boolean = false
@@ -18,18 +9,16 @@ export class LifetimeTerminable implements Lifetime {
     this.isTerminated = initiallyTerminated
   }
 
-  onTerminate(fn: Function, options: TerminationOptions = {}): void {
+  onTerminate(fn: Function) {
     if (!this.isTerminated) {
       this.actions.unshift(fn)
-    } else if (options.callImmediately) {
-      fn()
     } else {
       throw new Error("Can't add a function to the terminated lifetime")
     }
-  }
 
-  removeFn(fn: Function): void {
-    this.actions = this.actions.filter(f => f == fn)
+    return () => {
+      this.actions = this.actions.filter(f => f == fn)
+    }
   }
 
   terminate(): void {

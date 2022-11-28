@@ -1,2 +1,3 @@
+export * from './types'
 export * from './lifetime'
-export * from './sequantial'
+export * from './sequential'

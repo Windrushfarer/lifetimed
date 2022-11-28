@@ -11,6 +11,8 @@ export function addEventListenerLifetimed<K extends keyof WindowEventMap>(
 
     lifetime.onTerminate(() => {
       window.removeEventListener(type, listener, options)
-    }, { callImmediately: true })
+    })
   }
 }
+
+document.addEventListener

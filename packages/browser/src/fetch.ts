@@ -9,7 +9,7 @@ export function fetchLifetimed(
 
   lifetime.onTerminate(() => {
     controller.abort()
-  }, { callImmediately: true })
+  })
 
   return fetch(input, { ...init, signal: controller.signal })
 }
