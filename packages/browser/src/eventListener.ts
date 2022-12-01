@@ -1,18 +1,17 @@
 import { LifetimeTerminable } from '@lifetimed/core'
 
-export function addEventListenerLifetimed<K extends keyof WindowEventMap>(
+export function addEventListenerLifetimed<K extends keyof ElementEventMap>(
   lifetime: LifetimeTerminable,
+  element: Element,
   type: K,
-  listener: (this: Window, ev: WindowEventMap[K]) => any,
+  listener: (this: Element, ev: ElementEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
 ): void {
   if (!lifetime.isTerminated) {
-    window.addEventListener(type, listener, options)
+    element.addEventListener(type, listener, options)
 
-    lifetime.onTerminate(() => {
-      window.removeEventListener(type, listener, options)
+    lifetime.addCleanup(() => {
+      element.removeEventListener(type, listener, options)
     })
   }
 }
-
-document.addEventListener

@@ -10,8 +10,8 @@ export class NestedLifetime extends LifetimeTerminableImpl implements LifetimeNe
     this.children.push(nested)
 
     const parentTermimationAction = () => { nested.terminate() }
-    const removeAction = this.onTerminate(parentTermimationAction)
-    nested.onTerminate(() => {
+    const removeAction = this.addCleanup(parentTermimationAction)
+    nested.addCleanup(() => {
       this.children = this.children.filter(child => child === nested)
       removeAction()
     })

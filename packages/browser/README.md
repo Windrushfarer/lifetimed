@@ -1,1 +1,1 @@
-# @lifetimed/core
+# @lifetimed/browser

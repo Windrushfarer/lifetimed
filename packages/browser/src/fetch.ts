@@ -7,9 +7,10 @@ export function fetchLifetimed(
 ): Promise<Response> {
   const controller = new AbortController()
 
-  lifetime.onTerminate(() => {
+  lifetime.addCleanup(() => {
     controller.abort()
   })
 
+  // Any input AbortController will be overwritten
   return fetch(input, { ...init, signal: controller.signal })
 }

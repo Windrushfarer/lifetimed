@@ -9,7 +9,7 @@ export class LifetimeTerminableImpl implements LifetimeTerminable {
     this.isTerminated = initiallyTerminated
   }
 
-  onTerminate(fn: Function) {
+  addCleanup(fn: Function) {
     if (!this.isTerminated) {
       this.actions.unshift(fn)
     } else {

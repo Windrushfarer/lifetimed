@@ -33,8 +33,8 @@ export class SequentialLifetimes {
     if (parent) {
       const termimationAction = () => { nextLifetime.terminate() }
 
-      const removeAction = parent.onTerminate(termimationAction)
-      nextLifetime.onTerminate(removeAction)
+      const removeAction = parent.addCleanup(termimationAction)
+      nextLifetime.addCleanup(removeAction)
     }
 
     return nextLifetime

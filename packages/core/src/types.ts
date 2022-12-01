@@ -1,7 +1,7 @@
 export interface Lifetime {
   readonly isTerminated: boolean
 
-  onTerminate(fn: Function): () => void
+  addCleanup(fn: Function): () => void
 }
 
 export interface LifetimeTerminable extends Lifetime {
